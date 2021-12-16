@@ -1,0 +1,74 @@
+
+import sqlite3
+
+con=sqlite3.connect("F:/DB Browser/database/studentdata.db")
+cursor=con.cursor()
+
+# function to insert data in db
+def insertdata(name,age,city):
+    qry = "insert into student (Name,Age,City) values(?,?,?);"
+    con.execute(qry, (name,age,city))
+    con.commit()
+    print("User Details Added")
+
+# function to update data in db
+def updatedata(name, age, city,id):
+        qry = "update student set name=?,age=?,city=? where id=?; "
+        con.execute(qry, (name, age, city,id))
+        con.commit()
+        print("User Details Updated")
+
+# function to delte data from table in db
+def deletedata(id):
+    qry = "delete from student where id=?;"
+    con.execute(qry, (id))
+    con.commit()
+    print("User Details Deleted")
+
+# show all data from db
+def selectdata():
+    qry = "select * from student"
+    result=con.execute(qry)
+    for row in result:
+        print(row)
+
+#choices
+print("""
+     STUDENT DATABSE \n
+      1.Insert Data
+      2.Show Data
+      3.Edit Data
+      4.Delete Data
+      0.Quit
+""")
+
+ch=1
+while ch==1:
+     choice=int(input("Enter your Choice: "))
+     if (choice==2):
+         print("Print All Data")
+         selectdata()
+     elif (choice==1):
+         print("Add data")
+         name = input("Enter the Name: ")
+         age = input("Enter the age: ")
+         city = input("Enter the city: ")
+         insertdata(name, age, city)
+     elif (choice==3):
+         print("Edit data")
+         id = input("Enter the id: ")
+         name = input("Enter the Name: ")
+         age = input("Enter the age: ")
+         city = input("Enter the city: ")
+         updatedata(name, age, city, id)
+     elif (choice==4):
+         print("Delete data")
+         id = input("Enter the id: ")
+         deletedata(id)
+     elif choice==0:
+         quit()
+     else:
+         print("Invalid Choice")
+
+
+print("THANK YOU")
